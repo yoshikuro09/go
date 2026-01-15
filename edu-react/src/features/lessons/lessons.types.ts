@@ -1,3 +1,4 @@
+import type { Question } from "../quiz/quiz.types";
 export type LessonLevel = "beginner" | "intermediate" | "advanced";
 
 export type Lesson = {
@@ -7,4 +8,6 @@ export type Lesson = {
   level: LessonLevel;
   tags: string[];
   content: string;
+
+  quiz: Question[];
 };
