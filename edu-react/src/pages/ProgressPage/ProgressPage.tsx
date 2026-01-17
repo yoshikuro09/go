@@ -13,12 +13,12 @@ export function ProgressPage() {
 
   return (
     <div>
-      <h1 style={{ marginTop: 0 }}>Прогресс</h1>
+      <h1 style={{ marginTop: 0 }}>Прогрес</h1>
 
       <div style={{ border: "1px solid #ddd", borderRadius: 12, padding: 12, marginBottom: 16 }}>
         <div style={{ fontSize: 18, fontWeight: 700 }}>{percent}%</div>
         <div style={{ opacity: 0.8 }}>
-          Пройдено уроков: {completed} из {total}
+          Пройдено уроків: {completed} з {total}
         </div>
 
         <div style={{ marginTop: 10, height: 10, background: "#eee", borderRadius: 999, overflow: "hidden" }}>
@@ -26,11 +26,11 @@ export function ProgressPage() {
         </div>
       </div>
 
-      <h2 style={{ margin: "0 0 10px" }}>Пройденные уроки</h2>
+      <h2 style={{ margin: "0 0 10px" }}>Пройдені уроки</h2>
 
       {completedLessons.length === 0 ? (
         <div>
-          Пока нет пройденных уроков. Перейдите в <Link to="/">каталог</Link>.
+          Поки що немає пройдених уроків. Перейдіть до <Link to="/">каталогу</Link>.
         </div>
       ) : (
         <ul>

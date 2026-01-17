@@ -1,14 +1,18 @@
 import { Link, useParams } from "react-router-dom";
 import { lessons } from "../../features/lessons/lessons.data";
-import { markLessonCompleted, unmarkLessonCompleted } from "../../features/progress/progress.storage";
+import {markLessonCompleted, unmarkLessonCompleted,} from "../../features/progress/progress.storage";
 import { useProgress } from "../../features/progress/useProgress";
 
 export function LessonPage() {
- const { id } = useParams<{ id: string }>();
-  if (!id) return <div>Некорректный URL (нет id урока).</div>;
+  const { id } = useParams<{ id: string }>();
+
+  if (!id) return <div>Некоректний URL (немає id уроку).</div>;
+
   const lesson = lessons.find((l) => l.id === id);
   const { progress, refresh } = useProgress();
-  if (!lesson) return <div>Урок не найден.</div>;
+
+  if (!lesson) return <div>Урок не знайдено.</div>;
+
   const isCompleted = progress.completedLessons.includes(lesson.id);
 
   return (
@@ -27,17 +31,28 @@ export function LessonPage() {
             else markLessonCompleted(lesson.id);
             refresh();
           }}
-          style={{ padding: "10px 12px", border: "1px solid #ddd", borderRadius: 10, cursor: "pointer" }}
+          style={{
+            padding: "10px 12px",
+            border: "1px solid #ddd",
+            borderRadius: 10,
+            cursor: "pointer",
+          }}
         >
-          {isCompleted ? "Отменить «Пройдено»" : "Отметить как «Пройдено»"}
+          {isCompleted ? "Скасувати «Пройдено»" : "Позначити як «Пройдено»"}
         </button>
 
-        <Link to={`/lessons/${lesson.id}/quiz`} style={{ padding: "10px 12px", border: "1px solid #ddd", borderRadius: 10 }}>
-          Пройти квиз
+        <Link
+          to={`/lessons/${lesson.id}/quiz`}
+          style={{ padding: "10px 12px", border: "1px solid #ddd", borderRadius: 10 }}
+        >
+          Пройти квіз
         </Link>
 
-        <Link to="/" style={{ padding: "10px 12px", border: "1px solid #ddd", borderRadius: 10 }}>
-          Назад к урокам
+        <Link
+          to="/"
+          style={{ padding: "10px 12px", border: "1px solid #ddd", borderRadius: 10 }}
+        >
+          Назад до уроків
         </Link>
       </div>
     </div>

@@ -11,14 +11,12 @@ type AnswerState = {
 export function QuizPage() {
   const { id } = useParams<{ id: string }>();
 
-  if (!id) return <div>Некорректный URL (нет id урока).</div>;
+  if (!id) return <div>Некоректний URL (немає id уроку).</div>;
 
   const lesson = lessons.find((l) => l.id === id);
+  if (!lesson) return <div>Урок не знайдено.</div>;
 
-  if (!lesson) return 
-  <div>Урок не найден.</div>;
   const lessonId = lesson.id;
-
   const questions = lesson.quiz;
   const total = questions.length;
 
@@ -31,10 +29,10 @@ export function QuizPage() {
   if (total === 0) {
     return (
       <div>
-        <h1 style={{ marginTop: 0 }}>Квиз: {lesson.title}</h1>
-        <div>Для этого урока пока нет вопросов.</div>
+        <h1 style={{ marginTop: 0 }}>Квіз: {lesson.title}</h1>
+        <div>Для цього уроку поки що немає запитань.</div>
         <div style={{ marginTop: 12 }}>
-          <Link to={`/lessons/${lesson.id}`}>Назад к уроку</Link>
+          <Link to={`/lessons/${lesson.id}`}>Назад до уроку</Link>
         </div>
       </div>
     );
@@ -78,11 +76,13 @@ export function QuizPage() {
 
   return (
     <div>
-      <h1 style={{ marginTop: 0 }}>Квиз: {lesson.title}</h1>
+      <h1 style={{ marginTop: 0 }}>Квіз: {lesson.title}</h1>
 
-      <div style={{ opacity: 0.8, marginBottom: 12 }}>
-        Вопрос {step + 1} из {total}
-      </div>
+      {!finished && (
+        <div style={{ opacity: 0.8, marginBottom: 12 }}>
+          Питання {step + 1} з {total}
+        </div>
+      )}
 
       <section style={{ border: "1px solid #ddd", borderRadius: 12, padding: 12 }}>
         <div style={{ fontWeight: 700, marginBottom: 10 }}>{current.text}</div>
@@ -115,15 +115,16 @@ export function QuizPage() {
 
             return (
               <button
-                key={opt}
+                key={`${current.id}-${idx}`}
                 onClick={() => selectOption(idx)}
+                disabled={finished}
                 style={{
                   textAlign: "left",
                   padding: "10px 12px",
                   borderRadius: 10,
                   border,
                   background,
-                  cursor: "pointer",
+                  cursor: finished ? "default" : "pointer",
                 }}
               >
                 {opt}
@@ -132,52 +133,109 @@ export function QuizPage() {
           })}
         </div>
 
-        {state.selectedIndex !== null && current.explanation && (
-          <div style={{ marginTop: 12, padding: 10, border: "1px solid #ddd", borderRadius: 10, opacity: 0.9 }}>
+        {state.selectedIndex !== null && state.isCorrect === true && current.explanation && (
+          <div
+            style={{
+              marginTop: 12,
+              padding: 10,
+              border: "1px solid #ddd",
+              borderRadius: 10,
+              opacity: 0.9,
+            }}
+          >
             {current.explanation}
           </div>
         )}
       </section>
 
-      <div style={{ display: "flex", gap: 12, marginTop: 16, flexWrap: "wrap" }}>
-        <button
-          onClick={prev}
-          disabled={step === 0}
-          style={{ padding: "10px 12px", border: "1px solid #ddd", borderRadius: 10, cursor: "pointer" }}
+      {!finished ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            gap: 12,
+            marginTop: 16,
+            flexWrap: "wrap",
+            alignItems: "center",
+          }}
         >
-          Назад
-        </button>
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+            <button
+              onClick={prev}
+              disabled={step === 0}
+              style={{
+                padding: "10px 12px",
+                border: "1px solid #ddd",
+                borderRadius: 10,
+                cursor: "pointer",
+              }}
+            >
+              Назад
+            </button>
 
-        <button
-          onClick={next}
-          disabled={state.selectedIndex === null}
-          style={{ padding: "10px 12px", border: "1px solid #ddd", borderRadius: 10, cursor: "pointer" }}
+            <button
+              onClick={next}
+              disabled={state.selectedIndex === null}
+              style={{
+                padding: "10px 12px",
+                border: "1px solid #ddd",
+                borderRadius: 10,
+                cursor: "pointer",
+              }}
+            >
+              {step === total - 1 ? "Завершити" : "Далі"}
+            </button>
+          </div>
+
+          <Link
+            to={`/lessons/${lesson.id}`}
+            style={{ padding: "10px 12px", border: "1px solid #ddd", borderRadius: 10 }}
+          >
+            До уроку
+          </Link>
+        </div>
+      ) : (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            gap: 12,
+            marginTop: 16,
+            flexWrap: "wrap",
+            alignItems: "center",
+          }}
         >
-          {step === total - 1 ? "Завершить" : "Далее"}
-        </button>
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+            <button
+              onClick={restart}
+              style={{
+                padding: "10px 12px",
+                border: "1px solid #ddd",
+                borderRadius: 10,
+                cursor: "pointer",
+              }}
+            >
+              Пройти ще раз
+            </button>
+          </div>
 
-        <Link to={`/lessons/${lesson.id}`} style={{ padding: "10px 12px", border: "1px solid #ddd", borderRadius: 10 }}>
-          К уроку
-        </Link>
-
-        <Link to="/progress" style={{ padding: "10px 12px", border: "1px solid #ddd", borderRadius: 10 }}>
-          Прогресс
-        </Link>
-      </div>
+          <Link
+            to={`/lessons/${lesson.id}`}
+            style={{ padding: "10px 12px", border: "1px solid #ddd", borderRadius: 10 }}
+          >
+            До уроку
+          </Link>
+        </div>
+      )}
 
       {finished && (
         <div style={{ marginTop: 16, border: "1px solid #ddd", borderRadius: 12, padding: 12 }}>
-          <div style={{ fontWeight: 800, fontSize: 18 }}>Результат: {score} / {total}</div>
-          <div style={{ opacity: 0.85, marginTop: 6 }}>
-            Результат сохранён в прогресс.
+          <div style={{ fontWeight: 800, fontSize: 18 }}>
+            Результат: {score} / {total}
           </div>
-
-          <button
-            onClick={restart}
-            style={{ marginTop: 12, padding: "10px 12px", border: "1px solid #ddd", borderRadius: 10, cursor: "pointer" }}
-          >
-            Пройти ещё раз
-          </button>
+          <div style={{ opacity: 0.85, marginTop: 6 }}>
+            Результат збережено у прогресі.
+          </div>
         </div>
       )}
     </div>

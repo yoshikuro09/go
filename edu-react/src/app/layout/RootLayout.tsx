@@ -12,7 +12,7 @@ export function RootLayout() {
 
         <nav style={{ display: "grid", gap: 8 }}>
           <NavLink to="/" end>Уроки</NavLink>
-          <NavLink to="/progress">Прогресс</NavLink>
+          <NavLink to="/progress">Прогрес</NavLink>
         </nav>
       </aside>
 
