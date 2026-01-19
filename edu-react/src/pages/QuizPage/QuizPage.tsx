@@ -29,10 +29,12 @@ export function QuizPage() {
   if (total === 0) {
     return (
       <div>
-        <h1 style={{ marginTop: 0 }}>Квіз: {lesson.title}</h1>
+        <h1 className="pageTitle">Квіз: {lesson.title}</h1>
         <div>Для цього уроку поки що немає запитань.</div>
         <div style={{ marginTop: 12 }}>
-          <Link to={`/lessons/${lesson.id}`}>Назад до уроку</Link>
+          <Link className="btn" to={`/lessons/${lesson.id}`}>
+            Назад до уроку
+          </Link>
         </div>
       </div>
     );
@@ -76,7 +78,7 @@ export function QuizPage() {
 
   return (
     <div>
-      <h1 style={{ marginTop: 0 }}>Квіз: {lesson.title}</h1>
+      <h1 className="pageTitle">Квіз: {lesson.title}</h1>
 
       {!finished && (
         <div style={{ opacity: 0.8, marginBottom: 12 }}>
@@ -84,17 +86,16 @@ export function QuizPage() {
         </div>
       )}
 
-      <section style={{ border: "1px solid #ddd", borderRadius: 12, padding: 12 }}>
+      <section className="card">
         <div style={{ fontWeight: 700, marginBottom: 10 }}>{current.text}</div>
 
-        <div style={{ display: "grid", gap: 8 }}>
+        <div className="stack" style={{ gap: 8 }}>
           {current.options.map((opt, idx) => {
             const isSelected = state.selectedIndex === idx;
-
             const showResult = state.selectedIndex !== null;
             const isCorrectOption = idx === current.correctIndex;
 
-            let border = "1px solid #ddd";
+            let border = "1px solid var(--border)";
             let background = "transparent";
 
             if (showResult) {
@@ -109,8 +110,8 @@ export function QuizPage() {
                 background = "#f0fdf4";
               }
             } else if (isSelected) {
-              border = "1px solid #333";
-              background = "#f3f3f3";
+              border = "1px solid #334155";
+              background = "var(--surface-2)";
             }
 
             return (
@@ -134,108 +135,46 @@ export function QuizPage() {
         </div>
 
         {state.selectedIndex !== null && state.isCorrect === true && current.explanation && (
-          <div
-            style={{
-              marginTop: 12,
-              padding: 10,
-              border: "1px solid #ddd",
-              borderRadius: 10,
-              opacity: 0.9,
-            }}
-          >
+          <div className="explanation">
             {current.explanation}
           </div>
         )}
       </section>
 
       {!finished ? (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            gap: 12,
-            marginTop: 16,
-            flexWrap: "wrap",
-            alignItems: "center",
-          }}
-        >
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <button
-              onClick={prev}
-              disabled={step === 0}
-              style={{
-                padding: "10px 12px",
-                border: "1px solid #ddd",
-                borderRadius: 10,
-                cursor: "pointer",
-              }}
-            >
+        <div className="rowBetween" style={{ marginTop: 16, alignItems: "center" }}>
+          <div className="row">
+            <button className="btn" onClick={prev} disabled={step === 0}>
               Назад
             </button>
 
-            <button
-              onClick={next}
-              disabled={state.selectedIndex === null}
-              style={{
-                padding: "10px 12px",
-                border: "1px solid #ddd",
-                borderRadius: 10,
-                cursor: "pointer",
-              }}
-            >
+            <button className="btn" onClick={next} disabled={state.selectedIndex === null}>
               {step === total - 1 ? "Завершити" : "Далі"}
             </button>
           </div>
 
-          <Link
-            to={`/lessons/${lesson.id}`}
-            style={{ padding: "10px 12px", border: "1px solid #ddd", borderRadius: 10 }}
-          >
+          <Link className="btn" to={`/lessons/${lesson.id}`}>
             До уроку
           </Link>
         </div>
       ) : (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            gap: 12,
-            marginTop: 16,
-            flexWrap: "wrap",
-            alignItems: "center",
-          }}
-        >
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <button
-              onClick={restart}
-              style={{
-                padding: "10px 12px",
-                border: "1px solid #ddd",
-                borderRadius: 10,
-                cursor: "pointer",
-              }}
-            >
-              Пройти ще раз
-            </button>
-          </div>
+        <div className="rowBetween" style={{ marginTop: 16, alignItems: "center" }}>
+          <button className="btn" onClick={restart}>
+            Пройти ще раз
+          </button>
 
-          <Link
-            to={`/lessons/${lesson.id}`}
-            style={{ padding: "10px 12px", border: "1px solid #ddd", borderRadius: 10 }}
-          >
+          <Link className="btn" to={`/lessons/${lesson.id}`}>
             До уроку
           </Link>
         </div>
       )}
 
       {finished && (
-        <div style={{ marginTop: 16, border: "1px solid #ddd", borderRadius: 12, padding: 12 }}>
+        <div className="card" style={{ marginTop: 16 }}>
           <div style={{ fontWeight: 800, fontSize: 18 }}>
             Результат: {score} / {total}
           </div>
-          <div style={{ opacity: 0.85, marginTop: 6 }}>
-            Результат збережено у прогресі.
-          </div>
+          <div style={{ opacity: 0.85, marginTop: 6 }}>Результат збережено у прогресі.</div>
         </div>
       )}
     </div>

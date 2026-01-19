@@ -28,26 +28,21 @@ export function LessonsPage() {
 
   return (
     <div>
-      <h1 style={{ marginTop: 0 }}>GoLearn — каталог уроків</h1>
+      <h1 className="pageTitle">GoLearn — каталог уроків</h1>
 
       {/* Фільтри */}
-      <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 16 }}>
+      <div className="row" style={{ marginBottom: 16 }}>
         <input
+          className="input"
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="Пошук за назвою, описом, тегами..."
-          style={{
-            padding: 10,
-            minWidth: 280,
-            border: "1px solid #ddd",
-            borderRadius: 10,
-          }}
         />
 
         <select
+          className="select"
           value={level}
           onChange={(e) => setLevel(e.target.value as LessonLevel | "all")}
-          style={{ padding: 10, border: "1px solid #ddd", borderRadius: 10 }}
         >
           <option value="all">Усі рівні</option>
           <option value="beginner">Beginner</option>
@@ -57,60 +52,48 @@ export function LessonsPage() {
       </div>
 
       {/* Каталог */}
-      <div style={{ display: "grid", gap: 12 }}>
+      <div className="stack">
         {filtered.map((l) => {
           const isCompleted = progress.completedLessons.includes(l.id);
           const quizResult = progress.quizResults[l.id];
 
           return (
-            <article
+            <Link
               key={l.id}
-              style={{
-                border: "1px solid #ddd",
-                borderRadius: 12,
-                padding: 12,
-                background: isCompleted ? "#f8fafc" : "transparent",
-              }}
+              to={`/lessons/${l.id}`}
+              className={`card cardLink ${isCompleted ? "card--completed" : ""}`}
             >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  gap: 16,
-                  alignItems: "flex-start",
-                }}
-              >
+              <div className="rowBetween">
                 <div style={{ minWidth: 0 }}>
-                  <h3 style={{ margin: "0 0 6px" }}>
-                    <Link to={`/lessons/${l.id}`}>{l.title}</Link>
-                  </h3>
+                  <h3 style={{ margin: "0 0 6px" }}>{l.title}</h3>
 
                   <div style={{ opacity: 0.85 }}>{l.description}</div>
 
                   {/* Теги */}
-                  <div style={{ marginTop: 10, display: "flex", gap: 6, flexWrap: "wrap" }}>
-                    <span style={badgeStyle()}>{l.level}</span>
+                  <div className="row" style={{ marginTop: 10, gap: 6 }}>
+                    <span className="badge">{l.level}</span>
+
                     {l.tags.map((t) => (
-                      <span key={t} style={badgeStyle()}>
+                      <span key={t} className="badge">
                         #{t}
                       </span>
                     ))}
                   </div>
                 </div>
 
-                <div style={{ display: "grid", gap: 8, justifyItems: "end" }}>
+                <div className="stack" style={{ justifyItems: "end" }}>
                   {isCompleted && (
-                    <span style={statusStyle("#dcfce7", "#166534")}>✔ Пройдено</span>
+                    <span className="badge--status badge--success">✔ Пройдено</span>
                   )}
 
                   {quizResult && (
-                    <span style={statusStyle("#e0f2fe", "#075985")}>
+                    <span className="badge--status badge--info">
                       🎯 {quizResult.score}/{quizResult.total}
                     </span>
                   )}
                 </div>
               </div>
-            </article>
+            </Link>
           );
         })}
 
@@ -118,26 +101,4 @@ export function LessonsPage() {
       </div>
     </div>
   );
-}
-
-function badgeStyle(): React.CSSProperties {
-  return {
-    fontSize: 12,
-    padding: "2px 8px",
-    border: "1px solid #ddd",
-    borderRadius: 999,
-    whiteSpace: "nowrap",
-  };
-}
-
-function statusStyle(bg: string, fg: string): React.CSSProperties {
-  return {
-    fontSize: 12,
-    padding: "4px 8px",
-    borderRadius: 999,
-    background: bg,
-    color: fg,
-    border: "1px solid #ddd",
-    whiteSpace: "nowrap",
-  };
 }

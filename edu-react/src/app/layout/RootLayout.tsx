@@ -1,22 +1,37 @@
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
+
+const navLinkStyle = ({ isActive }: { isActive: boolean }): React.CSSProperties => ({
+  padding: "8px 10px",
+  borderRadius: 8,
+  textDecoration: "none",
+  color: "#000",
+  border: "1px solid #ddd",
+  background: isActive ? "#f1f5f9" : "transparent",
+  fontWeight: isActive ? 600 : 400,
+});
 
 export function RootLayout() {
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "240px 1fr", minHeight: "100vh" }}>
-      <aside style={{ borderRight: "1px solid #ddd", padding: 16 }}>
-        <div style={{ fontWeight: 800, marginBottom: 12 }}>
-        <Link to="/" style={{ fontWeight: 800, fontSize: 18 }}>
-          GoLearn
-        </Link>
-        </div>
+    <div className="appShell">
+      <aside className="sidebar">
+        <div className="brand">GoLearn</div>
 
-        <nav style={{ display: "grid", gap: 8 }}>
-          <NavLink to="/" end>Уроки</NavLink>
-          <NavLink to="/progress">Прогрес</NavLink>
+        <nav className="nav">
+          <NavLink to="/" end style={navLinkStyle}>
+            Головна
+          </NavLink>
+          
+          <NavLink to="/lessons" end style={navLinkStyle}>
+            Уроки
+          </NavLink>
+
+          <NavLink to="/progress" style={navLinkStyle}>
+            Прогрес
+          </NavLink>
         </nav>
       </aside>
 
-      <main style={{ padding: 16 }}>
+      <main className="main">
         <Outlet />
       </main>
     </div>

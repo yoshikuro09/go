@@ -1,0 +1,31 @@
+:root {
+  --bg: #ffffff;
+  --text: #0f172a;
+  --muted: #64748b;
+
+  --border: #e2e8f0;
+  --surface: #f8fafc;
+  --surface-2: #f1f5f9;
+
+  --success-bg: #dcfce7;
+  --success-fg: #166534;
+
+  --info-bg: #e0f2fe;
+  --info-fg: #075985;
+
+  --danger-bg: #fef2f2;
+  --danger-border: #fecaca;
+
+  --link: #1f2933;
+  --link-hover: #0f172a;
+
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-pill: 999px;
+
+  --p-2: 8px;
+  --p-3: 12px;
+  --p-4: 16px;
+
+  --sidebar-w: 240px;
+}

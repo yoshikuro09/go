@@ -1,0 +1,137 @@
+.explanation {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-left: 4px solid #22c55e;
+  background: #f0fdf4;
+  border-radius: 8px;
+  color: #14532d;
+  font-size: 14px;
+  line-height: 1.5;
+}
+a {
+  color: var(--link);
+  text-decoration: none;
+  font-weight: 500;
+}
+a:hover {
+  color: var(--link-hover);
+  text-decoration: underline;
+}
+h3 a {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.input,
+.select {
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--bg);
+  color: var(--text);
+}
+
+.card {
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--p-3);
+  background: var(--bg);
+}
+.card--completed {
+  background: var(--surface);
+}
+
+.badge {
+  font-size: 12px;
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  white-space: nowrap;
+}
+.badge--status {
+  font-size: 12px;
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  white-space: nowrap;
+}
+.badge--success {
+  background: var(--success-bg);
+  color: var(--success-fg);
+}
+.badge--info {
+  background: var(--info-bg);
+  color: var(--info-fg);
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  text-decoration: none;
+}
+.btn:hover {
+  background: var(--surface-2);
+  text-decoration: none;
+}
+.btn--danger {
+  background: var(--danger-bg);
+  border-color: var(--danger-border);
+}
+
+.btn--success {
+  background: var(--success-bg);
+  border-color: #bbf7d0;
+  color: var(--success-fg);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn:disabled:hover {
+  background: transparent;
+}
+
+.cardLink {
+  display: block;
+  text-decoration: none;
+}
+
+.cardLink:hover {
+  background: var(--surface-2);
+  text-decoration: none;
+}
+
+.featureGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.featureCard {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  background: var(--surface);
+}
+
+.featureIcon {
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+.featureTitle {
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.featureText {
+  font-size: 14px;
+  opacity: 0.85;
+}

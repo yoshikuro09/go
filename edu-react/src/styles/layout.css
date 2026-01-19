@@ -1,0 +1,49 @@
+.appShell {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  border-right: 1px solid var(--border);
+  padding: var(--p-4);
+}
+
+.brand {
+  font-weight: 800;
+  font-size: 20px;
+  margin-bottom: var(--p-4);
+  letter-spacing: 0.5px;
+  cursor: default;
+}
+
+.nav {
+  display: grid;
+  gap: 8px;
+}
+
+.main {
+  padding: var(--p-4);
+}
+
+.pageTitle {
+  margin-top: 0;
+}
+
+.stack {
+  display: grid;
+  gap: 12px;
+}
+
+.row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.rowBetween {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+}

@@ -13,16 +13,32 @@ export function ProgressPage() {
 
   return (
     <div>
-      <h1 style={{ marginTop: 0 }}>Прогрес</h1>
+      <h1 className="pageTitle">Прогрес</h1>
 
-      <div style={{ border: "1px solid #ddd", borderRadius: 12, padding: 12, marginBottom: 16 }}>
+      <div className="card" style={{ marginBottom: 16 }}>
         <div style={{ fontSize: 18, fontWeight: 700 }}>{percent}%</div>
+
         <div style={{ opacity: 0.8 }}>
           Пройдено уроків: {completed} з {total}
         </div>
 
-        <div style={{ marginTop: 10, height: 10, background: "#eee", borderRadius: 999, overflow: "hidden" }}>
-          <div style={{ width: `${percent}%`, height: "100%", background: "#333" }} />
+        <div
+          style={{
+            marginTop: 10,
+            height: 10,
+            background: "var(--surface-2)",
+            borderRadius: 999,
+            overflow: "hidden",
+            border: "1px solid var(--border)",
+          }}
+        >
+          <div
+            style={{
+              width: `${percent}%`,
+              height: "100%",
+              background: "var(--text)",
+            }}
+          />
         </div>
       </div>
 
@@ -30,16 +46,31 @@ export function ProgressPage() {
 
       {completedLessons.length === 0 ? (
         <div>
-          Поки що немає пройдених уроків. Перейдіть до <Link to="/">каталогу</Link>.
+          Поки що немає пройдених уроків. Перейдіть до <Link to="/lessons">каталогу</Link>.
         </div>
       ) : (
-        <ul>
-          {completedLessons.map((l) => (
-            <li key={l.id}>
-              <Link to={`/lessons/${l.id}`}>{l.title}</Link>
-            </li>
-          ))}
-        </ul>
+        <div className="stack">
+          {completedLessons.map((l) => {
+            const qr = progress.quizResults[l.id];
+
+            return (
+              <Link
+                key={l.id}
+                to={`/lessons/${l.id}`}
+                className="card cardLink rowBetween"
+                style={{ alignItems: "center" }}
+              >
+                <div style={{ minWidth: 0 }}>{l.title}</div>
+
+                {qr && (
+                  <span className="badge--status badge--info">
+                    🎯 {qr.score}/{qr.total}
+                  </span>
+                )}
+              </Link>
+            );
+          })}
+        </div>
       )}
     </div>
   );
