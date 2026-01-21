@@ -1,4 +1,5 @@
-import "./global.css";
+import "./styles/sidebar.css"
+import "./styles/global.css";
 import "./styles/variable.css";
 import "./styles/ui.css";
 import "./styles/layout.css"

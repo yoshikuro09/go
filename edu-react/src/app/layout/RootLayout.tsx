@@ -1,37 +1,22 @@
-import { NavLink, Outlet } from "react-router-dom";
-
-const navLinkStyle = ({ isActive }: { isActive: boolean }): React.CSSProperties => ({
-  padding: "8px 10px",
-  borderRadius: 8,
-  textDecoration: "none",
-  color: "#000",
-  border: "1px solid #ddd",
-  background: isActive ? "#f1f5f9" : "transparent",
-  fontWeight: isActive ? 600 : 400,
-});
+import { Outlet } from "react-router-dom";
+import { useState } from "react";
+import { Sidebar } from "./Sidebar";
 
 export function RootLayout() {
+  const [collapsed, setCollapsed] = useState(false);
+
   return (
-    <div className="appShell">
-      <aside className="sidebar">
-        <div className="brand">GoLearn</div>
+    <div
+      className="appShell"
+      style={{
+        display: "grid",
+        gridTemplateColumns: collapsed ? "84px 1fr" : "260px 1fr",
+        minHeight: "100vh",
+      }}
+    >
+      <Sidebar collapsed={collapsed} onToggle={() => setCollapsed((v) => !v)} />
 
-        <nav className="nav">
-          <NavLink to="/" end style={navLinkStyle}>
-            Головна
-          </NavLink>
-          
-          <NavLink to="/lessons" end style={navLinkStyle}>
-            Уроки
-          </NavLink>
-
-          <NavLink to="/progress" style={navLinkStyle}>
-            Прогрес
-          </NavLink>
-        </nav>
-      </aside>
-
-      <main className="main">
+      <main className="main" style={{ padding: 18 }}>
         <Outlet />
       </main>
     </div>
