@@ -1,42 +1,52 @@
 .explanation {
   margin-top: 12px;
   padding: 12px 14px;
-  border-left: 4px solid #22c55e;
-  background: #f0fdf4;
-  border-radius: 8px;
-  color: #14532d;
+  border-left: 4px solid rgba(34, 197, 94, 0.9);
+  background: rgba(34, 197, 94, 0.12);
+  border-radius: var(--r-md);
+  color: var(--text);
   font-size: 14px;
   line-height: 1.5;
 }
+
 a {
   color: var(--link);
   text-decoration: none;
   font-weight: 500;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
 }
+
 a:hover {
   color: var(--link-hover);
   text-decoration: underline;
 }
+
 h3 a {
   color: var(--text);
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .input,
 .select {
-  padding: 10px;
+  padding: 10px 12px;
   border: 1px solid var(--border);
   border-radius: var(--r-sm);
-  background: var(--bg);
+  background: var(--surface);
   color: var(--text);
+}
+
+.input::placeholder {
+  color: var(--muted);
 }
 
 .card {
   border: 1px solid var(--border);
   border-radius: var(--r-md);
   padding: var(--p-3);
-  background: var(--bg);
+  background: var(--surface);
+  color: var(--text);
 }
+
 .card--completed {
   background: var(--surface);
 }
@@ -47,7 +57,10 @@ h3 a {
   border: 1px solid var(--border);
   border-radius: var(--r-pill);
   white-space: nowrap;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.04);
 }
+
 .badge--status {
   font-size: 12px;
   padding: 4px 8px;
@@ -55,47 +68,63 @@ h3 a {
   border-radius: var(--r-pill);
   white-space: nowrap;
 }
+
 .badge--success {
   background: var(--success-bg);
   color: var(--success-fg);
+  border-color: rgba(34, 197, 94, 0.28);
 }
+
 .badge--info {
   background: var(--info-bg);
   color: var(--info-fg);
+  border-color: rgba(56, 189, 248, 0.28);
 }
 
 .btn {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
   padding: 10px 12px;
   border: 1px solid var(--border);
   border-radius: var(--r-sm);
-  background: transparent;
+  background: rgba(255, 255, 255, 0.02);
   color: var(--text);
+
   cursor: pointer;
   text-decoration: none;
+
+  transition: background 140ms ease, border-color 140ms ease, transform 140ms ease;
 }
+
 .btn:hover {
   background: var(--surface-2);
   text-decoration: none;
+  transform: translateY(-1px);
 }
+
 .btn--danger {
   background: var(--danger-bg);
   border-color: var(--danger-border);
+  color: var(--text);
 }
 
 .btn--success {
   background: var(--success-bg);
-  border-color: #bbf7d0;
+  border-color: rgba(34, 197, 94, 0.28);
   color: var(--success-fg);
 }
 
 .btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  transform: none;
 }
 
 .btn:disabled:hover {
-  background: transparent;
+  background: rgba(255, 255, 255, 0.02);
+  transform: none;
 }
 
 .cardLink {
@@ -116,9 +145,10 @@ h3 a {
 
 .featureCard {
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: var(--r-md);
   padding: 14px;
-  background: var(--surface);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
 }
 
 .featureIcon {
@@ -127,11 +157,191 @@ h3 a {
 }
 
 .featureTitle {
-  font-weight: 700;
+  font-weight: 800;
   margin-bottom: 4px;
 }
 
 .featureText {
   font-size: 14px;
-  opacity: 0.85;
+  color: var(--muted);
+}
+
+.lesson__desc {
+  color: var(--muted);
+}
+
+.lesson__actions {
+  margin-top: 16px;
+  align-items: center;
+}
+
+.progressCard {
+  margin-bottom: 16px;
+}
+
+.progressPercent {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.progressText {
+  color: var(--muted);
+}
+
+.progressBar {
+  margin-top: 10px;
+  height: 10px;
+  background: var(--surface-2);
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.progressBar__fill {
+  height: 100%;
+  background: var(--text);
+  transition: width 0.3s ease;
+}
+
+.progressSubtitle {
+  margin: 0 0 10px;
+}
+
+.progressLesson {
+  align-items: center;
+}
+
+.progressLessonTitle {
+  min-width: 0;
+}
+
+
+.dashWelcomeTitle {
+  margin-top: 0;
+  font-weight: 900;
+}
+
+.dashText {
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.dashText + .dashText {
+  margin-top: 12px;
+}
+
+.dashContinueTitle {
+  font-weight: 900;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.dashLessonTitle {
+  font-weight: 800;
+  color: var(--text);
+}
+
+.dashLessonDesc {
+  color: var(--muted);
+}
+
+.dashHint {
+  margin-top: 10px;
+  color: var(--muted);
+  opacity: 0.9;
+  font-size: 14px;
+}
+
+.dashSteps {
+  gap: 10px;
+}
+
+.dashSectionTitle {
+  font-weight: 900;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.lessonsFilters {
+  margin-bottom: 16px;
+}
+
+.lessonCardMain {
+  min-width: 0;
+}
+
+.lessonCardTitle {
+  margin: 0 0 6px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.lessonCardDesc {
+  color: var(--muted);
+}
+
+.lessonCardTags {
+  margin-top: 10px;
+  gap: 6px;
+}
+
+.lessonCardMeta {
+  justify-items: end;
+}
+
+.select {
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.select option {
+  background: #0b1220;   
+  color: rgba(255,255,255,0.92);
+}
+
+.select optgroup {
+  background: #0b1220;
+  color: rgba(255,255,255,0.92);
+}
+
+.lessonHero {
+  padding: 22px 24px;
+  margin-bottom: 16px;
+  border-radius: 18px;
+
+  background:
+    radial-gradient(1200px 300px at 10% -20%, rgba(56,189,248,0.12), transparent 40%),
+    linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.02) inset,
+    0 20px 40px rgba(0,0,0,0.35);
+}
+
+.lessonTitle {
+  margin: 0 0 6px;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+}
+
+.lessonSubtitle {
+  margin: 0;
+  color: var(--muted);
+}
+
+.lessonContent {
+  margin-top: 12px; 
+  padding: 16px 18px;
+  border-radius: 16px;
+
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+.lessonActions {
+  margin-top: 14px;
+  align-items: center;
 }

@@ -9,44 +9,40 @@ export function ProgressPage() {
   const completed = progress.completedLessons.length;
   const percent = total === 0 ? 0 : Math.round((completed / total) * 100);
 
-  const completedLessons = lessons.filter((l) => progress.completedLessons.includes(l.id));
+  const completedLessons = lessons.filter((l) =>
+    progress.completedLessons.includes(l.id)
+  );
 
   return (
     <div>
-      <h1 className="pageTitle">Прогрес</h1>
+      <div className="pageHeader">
+        <h1 className="pageHeader__title">Прогрес</h1>
+        <div className="pageHeader__subtitle">
+          Ваші результати та пройдені уроки
+        </div>
+      </div>
 
-      <div className="card" style={{ marginBottom: 16 }}>
-        <div style={{ fontSize: 18, fontWeight: 700 }}>{percent}%</div>
+      <div className="card progressCard">
+        <div className="progressPercent">{percent}%</div>
 
-        <div style={{ opacity: 0.8 }}>
+        <div className="progressText">
           Пройдено уроків: {completed} з {total}
         </div>
 
-        <div
-          style={{
-            marginTop: 10,
-            height: 10,
-            background: "var(--surface-2)",
-            borderRadius: 999,
-            overflow: "hidden",
-            border: "1px solid var(--border)",
-          }}
-        >
+        <div className="progressBar">
           <div
-            style={{
-              width: `${percent}%`,
-              height: "100%",
-              background: "var(--text)",
-            }}
+            className="progressBar__fill"
+            style={{ width: `${percent}%` }}
           />
         </div>
       </div>
 
-      <h2 style={{ margin: "0 0 10px" }}>Пройдені уроки</h2>
+      <h2 className="progressSubtitle">Пройдені уроки</h2>
 
       {completedLessons.length === 0 ? (
         <div>
-          Поки що немає пройдених уроків. Перейдіть до <Link to="/lessons">каталогу</Link>.
+          Поки що немає пройдених уроків. Перейдіть до{" "}
+          <Link to="/lessons">каталогу</Link>.
         </div>
       ) : (
         <div className="stack">
@@ -57,10 +53,9 @@ export function ProgressPage() {
               <Link
                 key={l.id}
                 to={`/lessons/${l.id}`}
-                className="card cardLink rowBetween"
-                style={{ alignItems: "center" }}
+                className="card cardLink rowBetween progressLesson"
               >
-                <div style={{ minWidth: 0 }}>{l.title}</div>
+                <div className="progressLessonTitle">{l.title}</div>
 
                 {qr && (
                   <span className="badge--status badge--info">

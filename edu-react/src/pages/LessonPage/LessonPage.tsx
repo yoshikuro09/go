@@ -17,33 +17,37 @@ export function LessonPage() {
 
   return (
     <div>
-      <h1 className="pageTitle">{lesson.title}</h1>
-      <p style={{ opacity: 0.8 }}>{lesson.description}</p>
+  <header className="lessonHero">
+    <h1 className="lessonTitle">{lesson.title}</h1>
+    <p className="lessonSubtitle">{lesson.description}</p>
+  </header>
 
-      <section className="card">{lesson.content}</section>
+  <section className="lessonContent">
+    {lesson.content}
+  </section>
 
-      <div className="rowBetween" style={{ marginTop: 16, alignItems: "center" }}>
-        <div className="row">
-          <Link className="btn" to={`/lessons/${lesson.id}/quiz`}>
-            Пройти квіз
-          </Link>
+  <div className="rowBetween lessonActions">
+    <div className="row">
+      <Link className="btn" to={`/lessons/${lesson.id}/quiz`}>
+        Пройти квіз
+      </Link>
 
-          <Link className="btn" to="/lessons">
-            Назад до уроків
-          </Link>
-        </div>
-
-        <button
-          className={`btn ${isCompleted ? "btn--danger" : "btn--success"}`}
-          onClick={() => {
-            if (isCompleted) unmarkLessonCompleted(lesson.id);
-            else markLessonCompleted(lesson.id);
-            refresh();
-          }}
-        >
-          {isCompleted ? "Скасувати «Пройдено»" : "Позначити як «Пройдено»"}
-        </button>
-      </div>
+      <Link className="btn" to="/lessons">
+        Назад до уроків
+      </Link>
     </div>
+
+    <button
+      className={`btn ${isCompleted ? "btn--danger" : "btn--success"}`}
+      onClick={() => {
+        if (isCompleted) unmarkLessonCompleted(lesson.id);
+        else markLessonCompleted(lesson.id);
+        refresh();
+      }}
+    >
+      {isCompleted ? "Скасувати «Пройдено»" : "Позначити як «Пройдено»"}
+    </button>
+  </div>
+</div>
   );
 }

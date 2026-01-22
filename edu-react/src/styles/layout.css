@@ -47,3 +47,32 @@
   gap: 16px;
   align-items: flex-start;
 }
+
+.pageHeader {
+  margin-bottom: 18px;
+  padding: 18px 20px;
+  border-radius: 18px;
+
+  background: radial-gradient(
+      1200px 400px at -10% -50%,
+      rgba(59,130,246,0.12),
+      transparent 60%
+    ),
+    linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+
+  border: 1px solid var(--border);
+}
+
+.pageHeader__title {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.pageHeader__subtitle {
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--muted);
+}

@@ -1,31 +1,31 @@
 :root {
-  --bg: #ffffff;
-  --text: #0f172a;
-  --muted: #64748b;
+  --bg: #0b1220;
+  --text: rgba(255, 255, 255, 0.92);
+  --muted: rgba(255, 255, 255, 0.68);
 
-  --border: #e2e8f0;
-  --surface: #f8fafc;
-  --surface-2: #f1f5f9;
+  --border: rgba(255, 255, 255, 0.10);
+  --surface: rgba(255, 255, 255, 0.06);
+  --surface-2: rgba(255, 255, 255, 0.10);
 
-  --success-bg: #dcfce7;
-  --success-fg: #166534;
+  --success-bg: rgba(34, 197, 94, 0.14);
+  --success-fg: rgba(255, 255, 255, 0.92);
 
-  --info-bg: #e0f2fe;
-  --info-fg: #075985;
+  --info-bg: rgba(56, 189, 248, 0.14);
+  --info-fg: rgba(255, 255, 255, 0.92);
 
-  --danger-bg: #fef2f2;
-  --danger-border: #fecaca;
+  --danger-bg: rgba(239, 68, 68, 0.14);
+  --danger-border: rgba(239, 68, 68, 0.28);
 
-  --link: #1f2933;
-  --link-hover: #0f172a;
+  --link: rgba(255, 255, 255, 0.86);
+  --link-hover: rgba(255, 255, 255, 0.96);
 
-  --r-sm: 8px;
-  --r-md: 12px;
+  --r-sm: 12px;
+  --r-md: 16px;
   --r-pill: 999px;
 
   --p-2: 8px;
   --p-3: 12px;
   --p-4: 16px;
 
-  --sidebar-w: 240px;
+  --sidebar-w: 260px;
 }

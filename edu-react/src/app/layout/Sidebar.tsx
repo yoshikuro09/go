@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 type NavItem = {
   to: string;
   label: string;
-  icon: React.ReactNode;
+  iconSrc: string;
   end?: boolean;
 };
 
@@ -15,9 +15,9 @@ export function Sidebar({
   onToggle: () => void;
 }) {
   const items: NavItem[] = [
-    { to: "/", label: "Головна", end: true, icon: <DotIcon /> },
-    { to: "/lessons", label: "Уроки", icon: <DotIcon /> },
-    { to: "/progress", label: "Прогрес", icon: <DotIcon /> },
+    { to: "/", label: "Головна", end: true, iconSrc: "/icons/home.png" },
+    { to: "/lessons", label: "Уроки", iconSrc: "/icons/lessons.png" },
+    { to: "/progress", label: "Прогрес", iconSrc: "/icons/progress.png" },
   ];
 
   return (
@@ -25,12 +25,23 @@ export function Sidebar({
       <div className="sb__top">
         <div className="sb__brand">
           <div className="sb__logo" aria-hidden>
-            G
+            <img
+              className="sb__logoImg"
+              src="/logo.png"
+              alt=""
+              draggable={false}
+            />
           </div>
+
           {!collapsed && <div className="sb__name">GoLearn</div>}
         </div>
 
-        <button className="sb__toggle" onClick={onToggle} aria-label="Toggle sidebar">
+        <button
+          className="sb__toggle"
+          onClick={onToggle}
+          aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+          title={collapsed ? "Розгорнути" : "Згорнути"}
+        >
           {collapsed ? "›" : "‹"}
         </button>
       </div>
@@ -41,9 +52,18 @@ export function Sidebar({
             key={it.to}
             to={it.to}
             end={it.end}
+            title={collapsed ? it.label : undefined}
             className={({ isActive }) => `sb__item ${isActive ? "is-active" : ""}`}
           >
-            <span className="sb__icon">{it.icon}</span>
+            <span className="sb__icon" aria-hidden>
+              <img
+                className="sb__iconImg"
+                src={it.iconSrc}
+                alt=""
+                draggable={false}
+              />
+            </span>
+
             {!collapsed && <span className="sb__label">{it.label}</span>}
             {!collapsed && <span className="sb__chev" aria-hidden>›</span>}
           </NavLink>
@@ -61,20 +81,5 @@ export function Sidebar({
         <div className="sb__foot">© GoLearn</div>
       </div>
     </aside>
-  );
-}
-
-function DotIcon() {
-  return (
-    <span
-      style={{
-        width: 10,
-        height: 10,
-        borderRadius: 999,
-        display: "inline-block",
-        background: "currentColor",
-        opacity: 0.9,
-      }}
-    />
   );
 }

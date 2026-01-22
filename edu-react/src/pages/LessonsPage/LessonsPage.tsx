@@ -28,10 +28,15 @@ export function LessonsPage() {
 
   return (
     <div>
-      <h1 className="pageTitle">GoLearn — каталог уроків</h1>
+      <div className="pageHeader">
+        <h1 className="pageHeader__title">GoLearn — каталог уроків</h1>
+        <div className="pageHeader__subtitle">
+          Оберіть урок та почніть навчання
+        </div>
+      </div>
 
       {/* Фільтри */}
-      <div className="row" style={{ marginBottom: 16 }}>
+      <div className="row lessonsFilters">
         <input
           className="input"
           value={q}
@@ -64,13 +69,13 @@ export function LessonsPage() {
               className={`card cardLink ${isCompleted ? "card--completed" : ""}`}
             >
               <div className="rowBetween">
-                <div style={{ minWidth: 0 }}>
-                  <h3 style={{ margin: "0 0 6px" }}>{l.title}</h3>
+                <div className="lessonCardMain">
+                  <h3 className="lessonCardTitle">{l.title}</h3>
 
-                  <div style={{ opacity: 0.85 }}>{l.description}</div>
+                  <div className="lessonCardDesc">{l.description}</div>
 
                   {/* Теги */}
-                  <div className="row" style={{ marginTop: 10, gap: 6 }}>
+                  <div className="row lessonCardTags">
                     <span className="badge">{l.level}</span>
 
                     {l.tags.map((t) => (
@@ -81,9 +86,11 @@ export function LessonsPage() {
                   </div>
                 </div>
 
-                <div className="stack" style={{ justifyItems: "end" }}>
+                <div className="stack lessonCardMeta">
                   {isCompleted && (
-                    <span className="badge--status badge--success">✔ Пройдено</span>
+                    <span className="badge--status badge--success">
+                      ✔ Пройдено
+                    </span>
                   )}
 
                   {quizResult && (

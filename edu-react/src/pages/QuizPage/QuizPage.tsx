@@ -28,10 +28,16 @@ export function QuizPage() {
 
   if (total === 0) {
     return (
-      <div>
-        <h1 className="pageTitle">Квіз: {lesson.title}</h1>
+      <div className="quiz">
+        <div className="pageHeader">
+          <h1 className="pageHeader__title">Квіз: {lesson.title}</h1>
+          <div className="pageHeader__subtitle">
+            Перевірте свої знання
+          </div>
+        </div>
         <div>Для цього уроку поки що немає запитань.</div>
-        <div style={{ marginTop: 12 }}>
+
+        <div className="quiz__actions">
           <Link className="btn" to={`/lessons/${lesson.id}`}>
             Назад до уроку
           </Link>
@@ -42,7 +48,6 @@ export function QuizPage() {
 
   const current = questions[step];
   const state = answers[step];
-
   const score = answers.reduce((acc, a) => acc + (a.isCorrect ? 1 : 0), 0);
 
   function selectOption(optionIndex: number) {
@@ -60,10 +65,10 @@ export function QuizPage() {
   function next() {
     if (step < total - 1) {
       setStep((s) => s + 1);
-    } else {
-      setFinished(true);
-      saveQuizResult(lessonId, { score, total });
+      return;
     }
+    setFinished(true);
+    saveQuizResult(lessonId, { score, total });
   }
 
   function prev() {
@@ -76,57 +81,47 @@ export function QuizPage() {
     setAnswers(questions.map(() => ({ selectedIndex: null, isCorrect: null })));
   }
 
-  return (
-    <div>
-      <h1 className="pageTitle">Квіз: {lesson.title}</h1>
+  const showResult = state.selectedIndex !== null;
 
+  return (
+    <div className="quiz">
+      <div className="pageHeader">
+          <h1 className="pageHeader__title">Квіз: {lesson.title}</h1>
+          <div className="pageHeader__subtitle">
+            Перевірте свої знання
+          </div>
+        </div>
       {!finished && (
-        <div style={{ opacity: 0.8, marginBottom: 12 }}>
+        <div className="quiz__meta">
           Питання {step + 1} з {total}
         </div>
       )}
 
       <section className="card">
-        <div style={{ fontWeight: 700, marginBottom: 10 }}>{current.text}</div>
+        <div className="quiz__question">{current.text}</div>
 
-        <div className="stack" style={{ gap: 8 }}>
+        <div className="quiz__options">
           {current.options.map((opt, idx) => {
             const isSelected = state.selectedIndex === idx;
-            const showResult = state.selectedIndex !== null;
             const isCorrectOption = idx === current.correctIndex;
 
-            let border = "1px solid var(--border)";
-            let background = "transparent";
+            let cls = "quiz__option";
 
             if (showResult) {
-              if (isSelected && state.isCorrect) {
-                border = "1px solid #16a34a";
-                background = "#dcfce7";
-              } else if (isSelected && state.isCorrect === false) {
-                border = "1px solid #dc2626";
-                background = "#fee2e2";
-              } else if (!isSelected && isCorrectOption) {
-                border = "1px solid #16a34a";
-                background = "#f0fdf4";
-              }
+              if (isSelected && state.isCorrect) cls += " quiz__option--correct";
+              else if (isSelected && state.isCorrect === false) cls += " quiz__option--wrong";
+              else if (!isSelected && isCorrectOption) cls += " quiz__option--correctGhost";
             } else if (isSelected) {
-              border = "1px solid #334155";
-              background = "var(--surface-2)";
+              cls += " quiz__option--selected";
             }
 
             return (
               <button
                 key={`${current.id}-${idx}`}
+                type="button"
+                className={cls}
                 onClick={() => selectOption(idx)}
                 disabled={finished}
-                style={{
-                  textAlign: "left",
-                  padding: "10px 12px",
-                  borderRadius: 10,
-                  border,
-                  background,
-                  cursor: finished ? "default" : "pointer",
-                }}
               >
                 {opt}
               </button>
@@ -134,21 +129,24 @@ export function QuizPage() {
           })}
         </div>
 
-        {state.selectedIndex !== null && state.isCorrect === true && current.explanation && (
-          <div className="explanation">
-            {current.explanation}
-          </div>
+        {showResult && state.isCorrect === true && current.explanation && (
+          <div className="explanation">{current.explanation}</div>
         )}
       </section>
 
       {!finished ? (
-        <div className="rowBetween" style={{ marginTop: 16, alignItems: "center" }}>
-          <div className="row">
-            <button className="btn" onClick={prev} disabled={step === 0}>
+        <div className="quiz__actions">
+          <div className="quiz__actionsLeft">
+            <button type="button" className="btn" onClick={prev} disabled={step === 0}>
               Назад
             </button>
 
-            <button className="btn" onClick={next} disabled={state.selectedIndex === null}>
+            <button
+              type="button"
+              className="btn"
+              onClick={next}
+              disabled={state.selectedIndex === null}
+            >
               {step === total - 1 ? "Завершити" : "Далі"}
             </button>
           </div>
@@ -158,10 +156,12 @@ export function QuizPage() {
           </Link>
         </div>
       ) : (
-        <div className="rowBetween" style={{ marginTop: 16, alignItems: "center" }}>
-          <button className="btn" onClick={restart}>
-            Пройти ще раз
-          </button>
+        <div className="quiz__actions">
+          <div className="quiz__actionsLeft">
+            <button type="button" className="btn" onClick={restart}>
+              Пройти ще раз
+            </button>
+          </div>
 
           <Link className="btn" to={`/lessons/${lesson.id}`}>
             До уроку
@@ -170,11 +170,11 @@ export function QuizPage() {
       )}
 
       {finished && (
-        <div className="card" style={{ marginTop: 16 }}>
-          <div style={{ fontWeight: 800, fontSize: 18 }}>
+        <div className="card quiz__result">
+          <div className="quiz__resultTitle">
             Результат: {score} / {total}
           </div>
-          <div style={{ opacity: 0.85, marginTop: 6 }}>Результат збережено у прогресі.</div>
+          <div className="quiz__resultText">Результат збережено у прогресі.</div>
         </div>
       )}
     </div>
