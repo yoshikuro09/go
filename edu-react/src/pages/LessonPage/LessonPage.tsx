@@ -22,9 +22,10 @@ export function LessonPage() {
     <p className="lessonSubtitle">{lesson.description}</p>
   </header>
 
-  <section className="lessonContent">
-    {lesson.content}
-  </section>
+  <section
+    className="card lessonContent"
+    dangerouslySetInnerHTML={{ __html: lesson.content }}
+  />
 
   <div className="rowBetween lessonActions">
     <div className="row">
